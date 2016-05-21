@@ -1,10 +1,26 @@
 <section id="home">
-	<h1>Make {########} great again</h1>
 
- 	<button class="btn" ng-click="getUngreatThings()">Make things great</button>
+	<div class="row">
+		<div class="col-md-12">
+			<h1>Make {########} great again</h1>
+		</div>
 
- 	<div ng-repeat="(key, value) in ungreatThings">
- 		<p>Make <a href="http://en.wikipedia.org/?curid={{ key }}" title="ungreatThings[key].title">{{ ungreatThings[key].title }}</a> great again!</p>
- 	</div>
+	 	<div class="col-md-6">
+	 		<form class="form-inline">
+	 			<div class="form-group">
+					<label for="numberOfThings">How many things would you like to make great again?</label>
+					<input id="numberOfThings" class="form-control" type="number" min="1" max="10" placeholder="1" ng-model="numberOfThings">
+				</div>
+			</form>
+		</div>
+
+		<div class="col-md-6">
+			<button class="btn" ng-click="getUngreatThings()">Make things great</button>
+		</div>
+	 	
+	 	<div ng-repeat="(key, value) in ungreatThings">
+	 		<p>Make <a href="http://en.wikipedia.org/?curid={{ key }}" title="ungreatThings[key].title">{{ ungreatThings[key].title }}</a> great again!</p>
+	 	</div>
+	</div>
 
 </section>

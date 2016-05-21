@@ -1,18 +1,24 @@
 app.controller('HomeController', function($scope, $http, HomeFactory) {
   
 	$scope.ungreatThings;
+	$scope.numberOfThings = 1;
 
 	$scope.getUngreatThings = function() {
-		HomeFactory.getUngreatThings()
-			.then(function(data) {
 
-				$scope.ungreatThings = data;
-				console.log($scope.ungreatThings);
+		if ($scope.numberOfThings > 0 && $scope.numberOfThings <= 10)
+			HomeFactory.getUngreatThings($scope.numberOfThings)
+				.then(function(data) {
 
-			})
-			.catch(function(err) {
-				console.error(err);
-			});
+					$scope.ungreatThings = data;
+					console.log($scope.ungreatThings);
+
+				})
+				.catch(function(err) {
+					console.error(err);
+				});
+		else {
+			// Handle input error
+		}
 	}
 
 });
