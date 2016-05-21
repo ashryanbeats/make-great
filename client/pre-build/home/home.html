@@ -1,6 +1,7 @@
 <section id="home">
 
 	<div class="row">
+	
 		<div class="col-md-12">
 			<h1>Make {########} great again</h1>
 		</div>
@@ -18,9 +19,12 @@
 			<button class="btn" ng-click="getUngreatThings()">Make things great</button>
 		</div>
 	 	
-	 	<div ng-repeat="(key, value) in ungreatThings">
-	 		<p>Make <a href="http://en.wikipedia.org/?curid={{ key }}" title="ungreatThings[key].title">{{ ungreatThings[key].title }}</a> great again!</p>
-	 	</div>
+	 	<div class="col-md-12">
+		 	<div ng-repeat="(key, value) in ungreatThings">
+		 		<p>Make <a href="http://en.wikipedia.org/?curid={{ key }}" title="ungreatThings[key].title">{{ ungreatThings[key].title }}</a> great again!</p>
+		 	</div>
+		</div>
+
 	</div>
 
 </section>
