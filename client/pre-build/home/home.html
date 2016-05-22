@@ -8,9 +8,26 @@
 
 	 	<div class="col-md-6">
 	 		<form class="form-inline">
-	 			<div class="form-group">
-					<label for="numberOfThings">How many things would you like to make great again?</label>
-					<input id="numberOfThings" class="form-control" type="number" min="1" max="10" placeholder="1" ng-model="numberOfThings">
+	 			<div class="form-group has-feedback" ng-class="{'has-error': inputError}" ng-dirty="">
+					<label for="numberOfThings" class="control-label">How many things would you like to make great again?</label>
+					
+					<input 
+						id="numberOfThings"
+						required
+						ng-required="true" 
+						class="form-control" 
+						type="number" 
+						min="{{ minNumberOfThings }}" 
+						max="{{ maxNumberOfThings }}"  
+						ng-model="numberOfThings"
+						ng-change="validateInput()">
+					
+					<!-- Error icon -->
+					<span 
+						ng-if="inputError" 
+						class="glyphicon glyphicon-remove form-control-feedback" 
+						aria-hidden="true">
+					</span>
 				</div>
 			</form>
 		</div>

@@ -1,20 +1,25 @@
 app.controller('HomeController', function($scope, $http, HomeFactory) {
   
 	$scope.numberOfThings = 1;
+	$scope.minNumberOfThings = 1;
+	$scope.maxNumberOfThings = 10;
 
   	$scope.init = function() {
 		$scope.ungreatThings = {};
 		$scope.tweetThings = '';
 		$scope.thingsArePresent = false;
+		$scope.inputError = false;
+
+		// Remove any existing Tweet buttons
 		angular.element(document.querySelector('[id^="twitter-widget-"]')).remove();
 	};
 	$scope.init();
 
 	$scope.getUngreatThings = function() {
 
-		$scope.init();
+		if (!$scope.inputError) {
+			$scope.init();
 
-		if ($scope.numberOfThings > 0 && $scope.numberOfThings <= 10) {
 			HomeFactory.getUngreatThings($scope.numberOfThings)
 				.then(function(data) {
 
@@ -48,9 +53,25 @@ app.controller('HomeController', function($scope, $http, HomeFactory) {
 				});
 		}
 		else {
+
 			// Handle input error
+			$scope.inputError = true;
 		}
 
+	}
+
+	$scope.validateInput = function() {
+		if (
+			$scope.numberOfThings >= $scope.minNumberOfThings && 
+			$scope.numberOfThings <= $scope.maxNumberOfThings
+		) {
+			$scope.inputError = false;
+			return true;
+		}
+		else {
+			$scope.inputError = true;
+			return false;
+		}
 	}
 
 });
