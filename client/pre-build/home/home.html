@@ -20,7 +20,7 @@
 		</div>
 	 	
 	 	<div class="col-md-12">
-	 		<a ng-if="thingsArePresent" class="twitter-share-button" href="https://twitter.com/intent/tweet?text={{ tweetThings }}&hashtags=MakeGreat">Tweet</a>
+	 		<div id="tweet"></div>
 
 		 	<div ng-repeat="(key, value) in ungreatThings">
 		 		<p>Make <a href="http://en.wikipedia.org/?curid={{ key }}" title="ungreatThings[key].title">{{ ungreatThings[key].title }}</a> great again!</p>

@@ -1,11 +1,12 @@
 app.controller('HomeController', function($scope, $http, HomeFactory) {
   
 	$scope.numberOfThings = 1;
-  
+
   	$scope.init = function() {
 		$scope.ungreatThings = {};
 		$scope.tweetThings = '';
 		$scope.thingsArePresent = false;
+		angular.element(document.querySelector('[id^="twitter-widget-"]')).remove();
 	};
 	$scope.init();
 
@@ -23,10 +24,21 @@ app.controller('HomeController', function($scope, $http, HomeFactory) {
 						$scope.tweetThings += 'Make ' + data[key].title + ' great again! ';
 					});
 
-					$scope.tweetThings = encodeURI($scope.tweetThings.trim());
 					$scope.thingsArePresent = true;
 
-					console.log($scope.tweetThings);
+					return true;
+				})
+				.then(function(data) {
+
+					// Generate Tweet button
+					twttr.widgets.createShareButton(
+						' ',
+						document.querySelector('#tweet'),
+						{
+							text: $scope.tweetThings.trim(),
+							hashtags: 'MakeGreat'
+						}
+					);
 
 				})
 				.catch(function(err) {
