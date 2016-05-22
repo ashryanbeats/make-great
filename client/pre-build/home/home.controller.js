@@ -4,6 +4,8 @@ app.controller('HomeController', function($scope, $http, HomeFactory) {
 	$scope.minNumberOfThings = 1;
 	$scope.maxNumberOfThings = 10;
 
+	
+
   	$scope.init = function() {
 		$scope.ungreatThings = {};
 		$scope.tweetThings = '';
@@ -12,8 +14,16 @@ app.controller('HomeController', function($scope, $http, HomeFactory) {
 
 		// Remove any existing Tweet buttons
 		angular.element(document.querySelector('[id^="twitter-widget-"]')).remove();
+
 	};
 	$scope.init();
+
+	$scope.$on('$viewContentLoaded', function() {
+		angular.element(document.querySelector('#numberOfThings')).tooltip({
+			container: 'body',
+			title: 'Enter a number from ' + $scope.minNumberOfThings + ' to ' + $scope.maxNumberOfThings
+		});
+	});
 
 	$scope.getUngreatThings = function() {
 

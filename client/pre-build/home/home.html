@@ -20,7 +20,9 @@
 						min="{{ minNumberOfThings }}" 
 						max="{{ maxNumberOfThings }}"  
 						ng-model="numberOfThings"
-						ng-change="validateInput()">
+						ng-change="validateInput()"
+						data-toggle="tooltip" 
+						data-placement="bottom">
 					
 					<!-- Error icon -->
 					<span 
