@@ -1,8 +1,8 @@
-app.controller('HomeController', function($scope, $http, HomeFactory) {
+app.controller('HomeController', function($scope, $http, HomeFactory, $timeout) {
   
 	$scope.numberOfThings = 1;
 	$scope.minNumberOfThings = 1;
-	$scope.maxNumberOfThings = 10;
+	$scope.maxNumberOfThings = 3;
 
   	$scope.init = function() {
 		$scope.ungreatThings = {};

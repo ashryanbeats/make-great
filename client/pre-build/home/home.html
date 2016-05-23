@@ -46,8 +46,8 @@
 	 	<div class="col-md-12">
 	 		<div id="tweet"></div>
 
-		 	<div ng-repeat="(key, value) in ungreatThings">
-		 		<p>Make <a href="http://en.wikipedia.org/?curid={{ key }}" title="{{ ungreatThings[key].title }}">{{ ungreatThings[key].title }}</a> great again!</p>
+		 	<div ng-repeat="(key, value) in ungreatThings track by $index">
+		 		<p>Make <a href="http://en.wikipedia.org/?curid={{ key }}" title="{{ ungreatThings[key].title }}">{{ ungreatThings[key].title }}</a> great again! <span id="tweet-{{ $index }}"></span></p>
 		 	</div>
 		</div>
 

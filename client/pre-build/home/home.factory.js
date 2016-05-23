@@ -11,13 +11,11 @@ app.factory('HomeFactory', function($http) {
 		return $http.get('/api/wikipedia?num_things=' + number)
 			.then(function(res) {
 
-				res.tweets = '';
+				res.tweets = {};
 
 				Object.keys(res.data).forEach(function(key, index) {
-					res.tweets += 'Make ' + res.data[key].title + ' great again! ';
+					res.tweets[index] = 'Make ' + res.data[key].title + ' great again!';
 				});
-
-				res.tweets = res.tweets.trim();
 
 				return res;
 			})
@@ -26,16 +24,22 @@ app.factory('HomeFactory', function($http) {
 			})
 	}
 
-	function _appendTweetButtonSync(tweet) {
+	function _appendTweetButtonSync(tweets) {
 		// Generate Tweet button
-		twttr.widgets.createShareButton(
-			' ',
-			document.querySelector('#tweet'),
-			{
-				text: tweet,
-				hashtags: 'MakeGreat'
-			}
-		);
+		setTimeout(cycle);
+
+		function cycle() {
+			Object.keys(tweets).forEach(function(key, index) {
+				twttr.widgets.createShareButton(
+					' ',
+					document.querySelector('#tweet-' + key),
+					{
+						text: tweets[key],
+						hashtags: 'MakeGreat'
+					}
+				);
+			});
+		}
 	}
 
 	function _removeOldTwitterWidgetSync() {
