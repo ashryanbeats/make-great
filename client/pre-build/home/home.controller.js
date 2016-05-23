@@ -4,26 +4,16 @@ app.controller('HomeController', function($scope, $http, HomeFactory) {
 	$scope.minNumberOfThings = 1;
 	$scope.maxNumberOfThings = 10;
 
-	
-
   	$scope.init = function() {
 		$scope.ungreatThings = {};
 		$scope.tweetThings = '';
 		$scope.thingsArePresent = false;
 		$scope.inputError = false;
 
-		// Remove any existing Tweet buttons
-		angular.element(document.querySelector('[id^="twitter-widget-"]')).remove();
-
+		HomeFactory.removeOldTwitterWidgetSync();
+		HomeFactory.initializeBootstrapTooltipSync($scope.minNumberOfThings, $scope.maxNumberOfThings);
 	};
 	$scope.init();
-
-	$scope.$on('$viewContentLoaded', function() {
-		angular.element(document.querySelector('#numberOfThings')).tooltip({
-			container: 'body',
-			title: 'Enter a number from ' + $scope.minNumberOfThings + ' to ' + $scope.maxNumberOfThings
-		});
-	});
 
 	$scope.getUngreatThings = function() {
 
@@ -31,30 +21,15 @@ app.controller('HomeController', function($scope, $http, HomeFactory) {
 			$scope.init();
 
 			HomeFactory.getUngreatThings($scope.numberOfThings)
-				.then(function(data) {
+				.then(function(res) {
 
-					$scope.ungreatThings = data;
-
-					Object.keys(data).forEach(function(key, index) {
-						$scope.tweetThings += 'Make ' + data[key].title + ' great again! ';
-					});
-
+					$scope.ungreatThings = res.data;
+					$scope.tweetThings = res.tweets;
 					$scope.thingsArePresent = true;
 
+					HomeFactory.appendTweetButtonSync($scope.tweetThings);
+
 					return true;
-				})
-				.then(function(data) {
-
-					// Generate Tweet button
-					twttr.widgets.createShareButton(
-						' ',
-						document.querySelector('#tweet'),
-						{
-							text: $scope.tweetThings.trim(),
-							hashtags: 'MakeGreat'
-						}
-					);
-
 				})
 				.catch(function(err) {
 
@@ -62,12 +37,6 @@ app.controller('HomeController', function($scope, $http, HomeFactory) {
 
 				});
 		}
-		else {
-
-			// Handle input error
-			$scope.inputError = true;
-		}
-
 	}
 
 	$scope.validateInput = function() {
@@ -76,11 +45,9 @@ app.controller('HomeController', function($scope, $http, HomeFactory) {
 			$scope.numberOfThings <= $scope.maxNumberOfThings
 		) {
 			$scope.inputError = false;
-			return true;
 		}
 		else {
 			$scope.inputError = true;
-			return false;
 		}
 	}
 
